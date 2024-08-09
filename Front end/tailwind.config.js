@@ -7,7 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: 'Roboto, sans-serif',
+        sans: 'Inter',
       },
       colors: {
         purple: '#835AFD',

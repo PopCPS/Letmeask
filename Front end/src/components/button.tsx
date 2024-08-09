@@ -1,7 +1,5 @@
 import { ComponentProps, ReactNode } from "react"
 import { VariantProps, tv } from "tailwind-variants"
-import { Google } from "../assets/google"
-
 const buttonVariants = tv({
   base: 'flex items-center justify-center gap-2 h-12 rounded-lg font-medium',
 
@@ -30,7 +28,6 @@ const buttonVariants = tv({
 })
 
 interface ButtonProps extends ComponentProps<'button'>, VariantProps<typeof buttonVariants> {
-  google?: boolean | undefined
   children: ReactNode
 }
 
@@ -38,14 +35,10 @@ export const Button = ({
   children,
   variant,
   size,
-  google,
   ...props
 }: ButtonProps) => {
   return (
     <button {...props} className={buttonVariants({ variant, size })}>
-      {google && (
-        <Google />
-      )}
       {children}
     </button>
   )
