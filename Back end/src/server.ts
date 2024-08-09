@@ -1,8 +1,9 @@
 import fastify from "fastify";
 import cors from "@fastify/cors"
-import { createUser } from "./routes/create-user";
+import { signup } from "./routes/create-user";
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
-
+import { signin } from "./routes/get-user";
+  
 const app = fastify()
 
 app.register(cors, {
@@ -12,7 +13,8 @@ app.register(cors, {
 app.setValidatorCompiler(validatorCompiler)
 app.setSerializerCompiler(serializerCompiler)
 
-app.register(createUser)
+app.register(signin)
+app.register(signup)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('Server running!')
