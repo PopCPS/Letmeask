@@ -1,5 +1,6 @@
 import { ComponentProps, ReactNode } from "react"
 import { VariantProps, tv } from "tailwind-variants"
+
 const buttonVariants = tv({
   base: 'flex items-center justify-center gap-2 h-12 rounded-lg font-medium',
 

@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         sans: 'Inter',
       },
+      boxShadow: {
+        postShadow : "0px 2px 12px rgba(0, 0, 0, 0.04)"
+      },
       colors: {
         purple: '#835AFD',
         purpleHover: '#6F4BD8',
