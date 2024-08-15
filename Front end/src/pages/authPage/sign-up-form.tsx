@@ -2,7 +2,7 @@ import { Plus } from "lucide-react"
 import { Button } from "../../components/button"
 import { Input } from "../../components/input"
 import { FormEvent, useState } from "react"
-import { api } from "../../utils/lib/axios"
+import { auth } from "../../utils/lib/axios"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
 import { set_isModalOpen } from "../../store/reducers/dataReducer"
 import { Modal } from "../../components/modal"
@@ -76,7 +76,7 @@ export const SignUpForm = () => {
       return
     }
 
-    await api.post('/auth/register', {
+    await auth.post('/auth/register', {
       name,
       email,
       password
@@ -87,7 +87,7 @@ export const SignUpForm = () => {
       navigate('/home')
     })
 
-    await api.post('/auth/login', {
+    await auth.post('/auth/login', {
       email,
       password
     }).catch(error => {

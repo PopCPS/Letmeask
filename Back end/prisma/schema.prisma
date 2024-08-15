@@ -7,60 +7,48 @@ generator client {
 
 datasource db {
   provider = "sqlite"
-  url      = env("DATABASE_URL")
+  url      = "file:./dev.db"
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String 
-  email    String @unique
+  id       String  @id @default(uuid())
+  name     String
+  email    String  @unique
   password String
   image    String?
 
-  Room     Room[]
-  Question Question[]
-  Reply    Reply[]
+  post  Post[]
+  reply Reply[]
 
   @@map("user")
 }
 
-model Room {
-  id      Int    @id @default(autoincrement())
-  user_id String
-  name    String
-
-  questions Question[]
-
-  created_by User @relation(fields: [user_id], references: [id])
-
-  @@map("room")
-}
-
-model Question {
-  id       String @id @default(uuid())
-  room_id  Int
-  user_id  String
-  question String
+model Post {
+  id         String   @id @default(uuid())
+  user_id    String
+  title      String
+  question   String
+  created_at DateTime
 
   Reply Reply[]
 
   created_by User @relation(fields: [user_id], references: [id])
-  room       Room @relation(fields: [room_id], references: [id])
 
-  @@map("question")
+  @@map("post")
 }
 
 model Reply {
-  id          String  @id @default(uuid())
-  question_id String
-  user_id     String
-  parent_id   String?
-  reply       String
+  id         String   @id @default(uuid())
+  post_id    String
+  user_id    String
+  parent_id  String?
+  reply      String
+  created_at DateTime
 
-  created_by User     @relation(fields: [user_id], references: [id])
-  question   Question @relation(fields: [question_id], references: [id])
-  parent     Reply?   @relation("ReplyReplies", fields: [parent_id], references: [id])
-  replies    Reply[]  @relation("ReplyReplies")
+  created_by User    @relation(fields: [user_id], references: [id])
+  post       Post    @relation(fields: [post_id], references: [id])
+  parent     Reply?  @relation("ReplyReplies", fields: [parent_id], references: [id])
+  replies    Reply[] @relation("ReplyReplies")
 
   @@map("reply")
 }

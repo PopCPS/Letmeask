@@ -1,10 +1,9 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 import { compareSync } from "bcrypt";
-import * as jwt from 'jsonwebtoken'
 import z from "zod";
-import { JWT_SECRET, WEB_DOMAIN } from "../lib/secrets";
+import { WEB_DOMAIN } from "../../lib/secrets";
 
 export const login = async (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().post('/auth/login', {
@@ -31,20 +30,15 @@ export const login = async (app: FastifyInstance) => {
       reply.code(401).send({ error: "Senha incorreta!" })
     }
 
-    const token = jwt.sign({
-      userId: user.id
-    }, 
-    JWT_SECRET,
-    { 
-      expiresIn: '7d'
-    })
+    const token = await reply.jwtSign({ id: user.id })
 
-    reply.setCookie('authToken', token, {
-      domain: WEB_DOMAIN,
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      maxAge: 7 * 24 * 60 * 60 * 1000
+    reply
+    .setCookie('authToken', token, {
+      path: '/',
+      secure: false,
+      sameSite: 'lax',
     })
+    .send('Cookie all set!')
 
     return ({ user, token })
   }

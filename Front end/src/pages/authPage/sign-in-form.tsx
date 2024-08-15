@@ -1,7 +1,7 @@
 import { FormEvent, useState } from "react"
 import { Input } from "../../components/input"
 import { useNavigate } from "react-router-dom"
-import { api } from "../../utils/lib/axios"
+import { auth } from "../../utils/lib/axios"
 import { LogIn } from "lucide-react"
 import { Button } from "../../components/button"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
@@ -15,15 +15,14 @@ export const SignInForm = () => {
 
   const isModalOpen = useAppSelector(state => state.apiData.isModalOpen)
 
-  const [ loggedInName, setLoggedInName ] = useState<string | null>(null)
-  const [ loggedInEmail, setLoggedInEmail ] = useState<string | null>(null)
-  const [ token, setToken ] = useState<string | null>()
+  // const [ loggedInName, setLoggedInName ] = useState<string | null>(null)
+  // const [ loggedInEmail, setLoggedInEmail ] = useState<string | null>(null)
+  // const [ token, setToken ] = useState<string | null>()
 
   const [ email, setEmail ] = useState<string | null>(null)
   const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
   const [ password, setPassword ] = useState<string | null>(null)
   const [ isPasswordError, setIsPasswordError ] = useState<boolean>(false)
-  const [ errorMessage, setErrorMessage ] = useState<string | null>(null)
 
   let hasAnyError = false
 
@@ -42,30 +41,21 @@ export const SignInForm = () => {
       hasAnyError = true
     }
 
-    if(email) {
-      if(/^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i.test(email)){
-        setIsEmailError(true)
-        hasAnyError = true
-      }
-    }
-
     if(hasAnyError) {
       return
     }
     
-    await api.post('/auth/login', {
+    await auth.post('/auth/login', {
       email,
       password
     }).catch(error => {
-      setErrorMessage(error.response.data.message)
       dispatch(set_isModalOpen(true)) 
       throw Error(error)
     }).then(response => {
-      setLoggedInName(response.data.name)
-      setLoggedInEmail(response.data.email)
-      setToken(response.data.token)
-    }).then(() => {
-      navigate('/home')
+      const status = response.status
+      if(status == 200) {
+        navigate('/')
+      }
     })
   }
 
@@ -102,7 +92,7 @@ export const SignInForm = () => {
       </form>
       {isModalOpen && (
         <Modal
-          errorMessage={errorMessage}
+          errorMessage={'erro'}
         />
       )}
     </>
