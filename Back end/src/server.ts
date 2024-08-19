@@ -9,6 +9,7 @@ import { register } from "./routes/auth/register";
 import { login } from "./routes/auth/login";
 import { logout } from "./routes/auth/logout";
 import { createPost } from "./routes/create-post";
+import { getPost } from "./routes/get-posts";
   
 const app = fastify()
 
@@ -34,6 +35,7 @@ app.register(login)
 app.register(logout)
 
 app.register(createPost)
+app.register(getPost)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('Server running!')
