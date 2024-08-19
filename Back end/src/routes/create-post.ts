@@ -5,15 +5,6 @@ import { prisma } from "../lib/prisma";
 
 export const createPost = async (app: FastifyInstance) => {
  app.withTypeProvider<ZodTypeProvider>().post('/post', {
-    onRequest: [
-      async (request, reply) => {
-        try {
-          await request.jwtVerify(); 
-        } catch (err) {
-          reply.code(401).send({ error: 'Unauthorized' });
-        }
-      }
-    ],
     schema: {
       body: z.object({
         title: z.string(),
@@ -32,18 +23,18 @@ export const createPost = async (app: FastifyInstance) => {
     }
     if(!question) {
       reply.code(400).send({ error: 'Pergunta obrigatória!'})
-    }
+    } 
 
-    return request
+    const { id } = await request.jwtDecode()
 
-    // const post = await prisma.post.create({
-    //   data: {
-    //     title,
-    //     question,
-    //     user_id: userId,
-    //     created_at: new Date(),
-    //   },
-    // })
+    const post = await prisma.post.create({
+      data: {
+        title,
+        question,
+        user_id: id,
+        created_at: new Date(),
+      },
+    })
 
   })
 }

@@ -19,9 +19,9 @@ app.register(cors, {
 
 app.register(fastifyCookie, {});
 app.register(fastifyJwt, {
-  secret: JWT_SECRET, // Replace with your JWT secret
+  secret: JWT_SECRET,
   cookie: {
-    cookieName: 'authToken', // Name of the cookie where the JWT is stored
+    cookieName: 'token',
     signed: false,
   },
 });

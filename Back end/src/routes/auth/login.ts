@@ -3,7 +3,6 @@ import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { prisma } from "../../lib/prisma";
 import { compareSync } from "bcrypt";
 import z from "zod";
-import { WEB_DOMAIN } from "../../lib/secrets";
 
 export const login = async (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().post('/auth/login', {
@@ -32,13 +31,13 @@ export const login = async (app: FastifyInstance) => {
 
     const token = await reply.jwtSign({ id: user.id })
 
-    reply
-    .setCookie('authToken', token, {
+    reply.cookie('token', token, {
+      maxAge: 1000 * 60,
       path: '/',
-      secure: false,
-      sameSite: 'lax',
-    })
-    .send('Cookie all set!')
+      sameSite: 'none',
+      httpOnly: true,
+      secure: true,
+  }).send('Cookie all set!');
 
     return ({ user, token })
   }
