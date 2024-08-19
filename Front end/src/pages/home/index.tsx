@@ -1,6 +1,6 @@
 import { Button } from "../../components/button"
 import { api } from "../../utils/lib/axios"
-import { Header } from "./header"
+import { Header } from "../../components/header"
 import { Timeline } from "./timeline"
 
 export const Home = () => {
@@ -9,6 +9,8 @@ export const Home = () => {
     await api.post('/post', {
       title: 'asdasffa',
       question: 'fvsnjqo'
+    }, {
+      withCredentials: true
     }).then(response => {
       console.log(response)
     })

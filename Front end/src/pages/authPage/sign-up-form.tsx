@@ -2,9 +2,9 @@ import { Plus } from "lucide-react"
 import { Button } from "../../components/button"
 import { Input } from "../../components/input"
 import { FormEvent, useState } from "react"
-import { auth } from "../../utils/lib/axios"
+import { api } from "../../utils/lib/axios"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { set_isModalOpen } from "../../store/reducers/dataReducer"
+import { set_isAuth, set_isModalOpen } from "../../store/reducers/dataReducer"
 import { Modal } from "../../components/modal"
 import { useNavigate } from "react-router-dom"
 
@@ -76,24 +76,28 @@ export const SignUpForm = () => {
       return
     }
 
-    await auth.post('/auth/register', {
+    await api.post('/auth/register', {
       name,
       email,
       password
     }).catch(error => {
-      setErrorMessage(error.response.data.message)
+      setErrorMessage(error.response)
       dispatch(set_isModalOpen(true))
-    }).then(() => {
-      navigate('/home')
     })
 
-    await auth.post('/auth/login', {
+    await api.post('/auth/login', {
       email,
       password
+    }, { 
+      withCredentials: true
     }).catch(error => {
-      setErrorMessage(error.response.data.message)
+      setErrorMessage(error.response)
       dispatch(set_isModalOpen(true)) 
+      dispatch(set_isAuth(false))
       throw Error(error)
+    }).then(() => {
+      dispatch(set_isAuth(true))
+      navigate('/')
     })
   }
 

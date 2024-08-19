@@ -13,7 +13,7 @@ const inputVariants = tv({
 })
 
 interface InputProps extends ComponentProps<'input'>, VariantProps<typeof inputVariants> {
-  nameId: string,
+  nameId?: string,
   placeholder?: string | undefined,
   type?: string | undefined  
 }
