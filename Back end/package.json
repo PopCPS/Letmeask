@@ -12,7 +12,6 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/cookie-parser": "^1.4.7",
-    "@types/jsonwebtoken": "^9.0.6",
     "@types/node": "^22.1.0",
     "prisma": "^5.18.0",
     "tsx": "^4.16.5",
@@ -29,7 +28,6 @@
     "dotenv": "^16.4.5",
     "fastify": "^4.28.1",
     "fastify-type-provider-zod": "^2.0.0",
-    "jsonwebtoken": "^9.0.2",
     "zod": "^3.23.8"
   }
 }

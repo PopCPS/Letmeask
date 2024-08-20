@@ -31,8 +31,8 @@ model Post {
   question   String
   created_at DateTime
 
-  PostLike PostLike[]
-  reply    Reply[]
+  likes PostLike[]
+  reply Reply[]
 
   created_by User @relation(fields: [user_id], references: [id])
 
@@ -57,10 +57,11 @@ model Reply {
 
 model PostLike {
   id      String @id @default(uuid())
-  post    Post   @relation(fields: [post_id], references: [id])
   post_id String
-  user    User   @relation(fields: [user_id], references: [id])
   user_id String
+
+  post Post @relation(fields: [post_id], references: [id])
+  user User @relation(fields: [user_id], references: [id])
 
   @@unique([post_id, user_id])
   @@map("post_like")

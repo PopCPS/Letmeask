@@ -8,8 +8,12 @@ import fastifyJwt from "@fastify/jwt";
 import { register } from "./routes/auth/register";
 import { login } from "./routes/auth/login";
 import { logout } from "./routes/auth/logout";
-import { createPost } from "./routes/create-post";
-import { getPost } from "./routes/get-posts";
+import { createPost } from "./routes/posts/create-post";
+import { getPost } from "./routes/posts/get-posts";
+import { likePost } from "./routes/posts/create-like";
+import { unlikePost } from "./routes/posts/delete-like";
+import { getLike } from "./routes/posts/get-likes";
+import { getUser } from "./routes/user/get-user";
   
 const app = fastify()
 
@@ -34,8 +38,13 @@ app.register(register)
 app.register(login)
 app.register(logout)
 
+app.register(getUser)
+
 app.register(createPost)
 app.register(getPost)
+app.register(getLike)
+app.register(likePost)
+app.register(unlikePost)
 
 app.listen({ port: 3333 }).then(() => {
   console.log('Server running!')

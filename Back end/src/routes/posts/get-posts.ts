@@ -1,12 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
 import z from "zod";
-
-// const paginationSchema = z.object({
-//   page: z.number().min(1).default(1),
-//   pageSize: z.number().min(1).max(100).default(20),
-// });
 
 export const getPost = async (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().get('/getPosts', {
@@ -19,8 +14,6 @@ export const getPost = async (app: FastifyInstance) => {
 
     const { page } = request.query
 
-    console.log(request.query)
-
     const skip = (parseInt(page) - 1) * 20
     const take = 20
 
@@ -31,11 +24,20 @@ export const getPost = async (app: FastifyInstance) => {
         created_at: 'desc'
       },
       select: {
+        id: true,
         title: true,
         question: true,
-        Reply: true,
+        reply: true,
         created_at: true,
-        created_by: true
+        created_by: {
+          select: {
+            image: true,
+            name: true,
+            id: true,
+            password: false,
+            email: false,
+          }
+        }
       },
     })
 

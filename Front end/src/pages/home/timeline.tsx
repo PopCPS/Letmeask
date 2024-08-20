@@ -1,4 +1,4 @@
-import { MessageSquare, ThumbsDown, ThumbsUp, User } from "lucide-react"
+import { User } from "lucide-react"
 import { api } from "../../utils/lib/axios"
 import { useEffect, useState } from "react"
 import dayjs from 'dayjs'
@@ -6,14 +6,15 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/pt-br'
 import { useAppSelector } from "../../store/hooks"
 import { useNavigate } from "react-router-dom"
+import { PostControls } from "./post-controls"
  
 interface Post {
+  id: string
   title: string
   question: string
   reply: Post[] | null
   created_at: string
   created_by: User
-  question_id: string
 }[]
 
 interface User {
@@ -88,21 +89,10 @@ export const Timeline = () => {
                 </button>
                 <h3 className="text-grayDark h-fit">{post.created_by.name}</h3>
                 <span className="text-grayDark text-sm h-fit ">{timeFromNow}</span>
-              </div>    
-              <div className="flex items-center gap-2">
-                <div>
-                  <span>{}</span>
-                  <button>
-                    <ThumbsUp strokeWidth="1" className="text-grayDark" />  
-                  </button>  
-                </div>
-                <button>
-                  <ThumbsDown strokeWidth="1" className="text-grayDark" />
-                </button>
-                <button>
-                  <MessageSquare strokeWidth="1" className="text-grayDark" />
-                </button>
-              </div>      
+              </div>
+              <PostControls 
+                postId={post.id}
+              />
             </div>    
           </div>
         )

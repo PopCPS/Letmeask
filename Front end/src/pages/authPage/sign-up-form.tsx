@@ -4,7 +4,7 @@ import { Input } from "../../components/input"
 import { FormEvent, useState } from "react"
 import { api } from "../../utils/lib/axios"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { set_isAuth, set_isModalOpen, set_userProfilePic } from "../../store/reducers/dataReducer"
+import { set_isAuth, set_isModalOpen } from "../../store/reducers/dataReducer"
 import { Modal } from "../../components/modal"
 import { useNavigate } from "react-router-dom"
 
@@ -91,9 +91,8 @@ export const SignUpForm = () => {
       password
     }, { 
       withCredentials: true
-    }).then(response => {
+    }).then(() => {
       dispatch(set_isAuth(true))
-      dispatch(set_userProfilePic(response.data))
       navigate('/')
     }).catch(error => {
       setErrorMessage(error.response)

@@ -5,7 +5,7 @@ import { api } from "../../utils/lib/axios"
 import { LogIn } from "lucide-react"
 import { Button } from "../../components/button"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { set_isAuth, set_isModalOpen, set_userProfilePic } from "../../store/reducers/dataReducer"
+import { set_isAuth, set_isModalOpen } from "../../store/reducers/dataReducer"
 import { Modal } from "../../components/modal"
 
 export const SignInForm = () => {
@@ -14,10 +14,6 @@ export const SignInForm = () => {
   const navigate = useNavigate()
 
   const isModalOpen = useAppSelector(state => state.apiData.isModalOpen)
-
-  // const [ loggedInName, setLoggedInName ] = useState<string | null>(null)
-  // const [ loggedInEmail, setLoggedInEmail ] = useState<string | null>(null)
-  // const [ token, setToken ] = useState<string | null>()
 
   const [ email, setEmail ] = useState<string | null>(null)
   const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
@@ -54,7 +50,6 @@ export const SignInForm = () => {
       const status = response.status
       if(status == 200) {
         dispatch(set_isAuth(true))
-        dispatch(set_userProfilePic(response.data))
         navigate('/')
       }
     }).catch(error => {

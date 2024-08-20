@@ -1,7 +1,8 @@
-import fastify, { FastifyInstance } from "fastify";
+import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
-import { prisma } from "../lib/prisma";
+import { prisma } from "../../lib/prisma";
+import { jwtPayload } from "../../lib/interfaces/jwt-payload";
 
 export const createPost = async (app: FastifyInstance) => {
  app.withTypeProvider<ZodTypeProvider>().post('/post', {
@@ -23,11 +24,12 @@ export const createPost = async (app: FastifyInstance) => {
     }
     if(!question) {
       reply.code(400).send({ error: 'Pergunta obrigatória!'})
+      return
     } 
 
-    const { id } = await request.jwtDecode()
+    const { id } = await request.jwtDecode() as jwtPayload
 
-    const post = await prisma.post.create({
+    await prisma.post.create({
       data: {
         title,
         question,
