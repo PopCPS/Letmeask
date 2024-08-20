@@ -37,8 +37,8 @@ export const login = async (app: FastifyInstance) => {
       sameSite: 'none',
       httpOnly: true,
       secure: true,
-  }).send('Cookie all set!');
+  })
 
-    return ({ user, token })
+    return (user.name, user.image)
   }
 )}

@@ -7,7 +7,7 @@ export const Home = () => {
 
   const postPost = async () => {
     await api.post('/post', {
-      title: 'asdasffa',
+      title: 'asdfavgrbgrfgrhthfa',
       question: 'fvsnjqo'
     }, {
       withCredentials: true

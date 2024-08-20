@@ -5,6 +5,7 @@ import { IStates } from "../../utils/interfaces/states";
 const initialState: IStates = {
   isModalOpen: false,
   isAuth: false,
+  userProfilePic: null
 }
 
 export const dataSlice = createSlice({
@@ -16,6 +17,9 @@ export const dataSlice = createSlice({
     },
     set_isAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload
+    },
+    set_userProfilePic: (state, action: PayloadAction<string>) => {
+      state.userProfilePic = action.payload
     }
   }
 })
@@ -23,6 +27,7 @@ export const dataSlice = createSlice({
 export const {
   set_isModalOpen,
   set_isAuth,
+  set_userProfilePic,
 } = dataSlice.actions
 
 export default dataSlice.reducer

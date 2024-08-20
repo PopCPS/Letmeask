@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.3",
+    "dayjs": "^1.11.13",
     "dotenv": "^16.4.5",
     "js-cookie": "^2.2.1",
     "letmeask": "file:",

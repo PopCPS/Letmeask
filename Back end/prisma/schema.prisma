@@ -17,8 +17,9 @@ model User {
   password String
   image    String?
 
-  post  Post[]
-  reply Reply[]
+  post      Post[]
+  postLikes PostLike[]
+  reply     Reply[]
 
   @@map("user")
 }
@@ -30,7 +31,8 @@ model Post {
   question   String
   created_at DateTime
 
-  Reply Reply[]
+  PostLike PostLike[]
+  reply    Reply[]
 
   created_by User @relation(fields: [user_id], references: [id])
 
@@ -51,4 +53,15 @@ model Reply {
   replies    Reply[] @relation("ReplyReplies")
 
   @@map("reply")
+}
+
+model PostLike {
+  id      String @id @default(uuid())
+  post    Post   @relation(fields: [post_id], references: [id])
+  post_id String
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@unique([post_id, user_id])
+  @@map("post_like")
 }
