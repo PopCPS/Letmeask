@@ -9,7 +9,7 @@ export function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='/auth' element={<AuthPage />} />
-        <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/profile/:url' element={<ProfilePage />} />
       </Routes>
     </Router>
   )

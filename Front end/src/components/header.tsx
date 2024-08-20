@@ -1,6 +1,5 @@
 import { User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
-import { useAppSelector } from "../store/hooks"
 import { useEffect, useState } from "react"
 import { api } from "../utils/lib/axios"
 
@@ -8,8 +7,8 @@ export const Header = () => {
 
   const navigate = useNavigate()
 
-  const isAuth = useAppSelector(state => state.apiData.isAuth)
-  const [ userProfilePic, setUserProfilePic ] = useState<string | null>(null)  
+  const [ userProfilePic, setUserProfilePic ] = useState<string | null>(null) 
+  const [ userProfileUrl, setUserProfileUrl ] = useState<string | null>(null) 
 
   const navigateHome = () => {
     navigate('/')
@@ -19,6 +18,7 @@ export const Header = () => {
     await api.get('/user')
     .then(response => {
       setUserProfilePic(response.data.image)
+      setUserProfileUrl(response.data.url)
     })
     .catch(error => {
       console.log(error)
@@ -26,8 +26,8 @@ export const Header = () => {
   }
 
   const profileRedirect = () => {
-    if(isAuth) {
-      navigate('/profile')
+    if(userProfileUrl) {
+      navigate(`/profile/${userProfileUrl}`)
     } else {
       navigate('/auth')
     }

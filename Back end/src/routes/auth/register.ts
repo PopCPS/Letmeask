@@ -41,6 +41,15 @@ export async function register(app: FastifyInstance) {
     }
    }) 
 
-   return { user }
+   const updatedUser = await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      url: hashSync(user.id ,10).replace(/[^a-zA-Z0-9]/g, '-')
+    }
+   })
+
+   return { updatedUser }
   })
 }
