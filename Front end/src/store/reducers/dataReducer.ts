@@ -3,7 +3,8 @@ import { PayloadAction } from "@reduxjs/toolkit";
 import { IStates } from "../../utils/interfaces/states";
 
 const initialState: IStates = {
-  isModalOpen: false,
+  isCreatePostModalOpen: false,
+  isErrorModalOpen: false,
   isAuth: false,
 }
 
@@ -11,8 +12,11 @@ export const dataSlice = createSlice({
   name: "pageStates",
   initialState,
   reducers: {
-    set_isModalOpen: (state, action: PayloadAction<boolean>) => {
-      state.isModalOpen = action.payload
+    set_isCreatePostModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isCreatePostModalOpen = action.payload
+    },
+    set_isErrorModalOpen: (state, action: PayloadAction<boolean>) => {
+      state.isErrorModalOpen = action.payload
     },
     set_isAuth: (state, action: PayloadAction<boolean>) => {
       state.isAuth = action.payload
@@ -21,7 +25,8 @@ export const dataSlice = createSlice({
 })
 
 export const {
-  set_isModalOpen,
+  set_isCreatePostModalOpen,
+  set_isErrorModalOpen,
   set_isAuth,
 } = dataSlice.actions
 

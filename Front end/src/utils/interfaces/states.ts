@@ -1,4 +1,5 @@
 export interface IStates {
-  isModalOpen: boolean
+  isCreatePostModalOpen: boolean
+  isErrorModalOpen: boolean
   isAuth: boolean
 }

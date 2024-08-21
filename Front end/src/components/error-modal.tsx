@@ -1,17 +1,17 @@
 import { useAppDispatch } from "../store/hooks"
-import { set_isModalOpen } from "../store/reducers/dataReducer"
+import { set_isErrorModalOpen } from "../store/reducers/dataReducer"
 import { Button } from "./button"
 
-interface ModalProps  {
+interface ErrorModalProps  {
   errorMessage: string | null
 }
 
-export const Modal = ({ errorMessage }: ModalProps) => {
+export const ErrorModal = ({ errorMessage }: ErrorModalProps) => {
 
   const dispatch = useAppDispatch()
 
   const closeModal = () => {
-    dispatch(set_isModalOpen(false))
+    dispatch(set_isErrorModalOpen(false))
   }
 
   return (

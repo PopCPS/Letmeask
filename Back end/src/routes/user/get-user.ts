@@ -2,7 +2,6 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { jwtPayload } from "../../lib/interfaces/jwt-payload";
 import { prisma } from "../../lib/prisma";
-import z from "zod";
 
 export const getUser = async (app: FastifyInstance) => {
   app.withTypeProvider<ZodTypeProvider>().get('/user', 
@@ -15,6 +14,7 @@ export const getUser = async (app: FastifyInstance) => {
         id
       },
       select: {
+        url: true,
         name: true,
         image: true,
         email: true,

@@ -4,8 +4,8 @@ import { Input } from "../../components/input"
 import { FormEvent, useState } from "react"
 import { api } from "../../utils/lib/axios"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { set_isAuth, set_isModalOpen } from "../../store/reducers/dataReducer"
-import { Modal } from "../../components/modal"
+import { set_isAuth, set_isErrorModalOpen } from "../../store/reducers/dataReducer"
+import { ErrorModal } from "../../components/error-modal"
 import { useNavigate } from "react-router-dom"
 
 export const SignUpForm = () => {
@@ -13,7 +13,7 @@ export const SignUpForm = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   
-  const isModalOpen = useAppSelector(state => state.apiData.isModalOpen)
+  const isModalOpen = useAppSelector(state => state.apiData.isErrorModalOpen)
 
   const [ name, setName ] = useState<string | null>(null)
   const [ isNameError, setIsNameError ] = useState<boolean>(false)
@@ -82,7 +82,7 @@ export const SignUpForm = () => {
       password
     }).catch(error => {
       setErrorMessage(error.response)
-      dispatch(set_isModalOpen(true))
+      dispatch(set_isErrorModalOpen(true))
       return
     })
 
@@ -96,7 +96,7 @@ export const SignUpForm = () => {
       navigate('/')
     }).catch(error => {
       setErrorMessage(error.response)
-      dispatch(set_isModalOpen(true)) 
+      dispatch(set_isErrorModalOpen(true)) 
       dispatch(set_isAuth(false))
       throw Error(error)
     })
@@ -154,7 +154,7 @@ export const SignUpForm = () => {
         </Button>
       </form>
       {isModalOpen && (
-        <Modal
+        <ErrorModal
           errorMessage={errorMessage}
         />
       )}

@@ -5,15 +5,15 @@ import { api } from "../../utils/lib/axios"
 import { LogIn } from "lucide-react"
 import { Button } from "../../components/button"
 import { useAppDispatch, useAppSelector } from "../../store/hooks"
-import { set_isAuth, set_isModalOpen } from "../../store/reducers/dataReducer"
-import { Modal } from "../../components/modal"
+import { set_isAuth, set_isErrorModalOpen } from "../../store/reducers/dataReducer"
+import { ErrorModal } from "../../components/error-modal"
 
 export const SignInForm = () => {
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  const isModalOpen = useAppSelector(state => state.apiData.isModalOpen)
+  const isModalOpen = useAppSelector(state => state.apiData.isErrorModalOpen)
 
   const [ email, setEmail ] = useState<string | null>(null)
   const [ isEmailError, setIsEmailError ] = useState<boolean>(false)
@@ -53,7 +53,7 @@ export const SignInForm = () => {
         navigate('/')
       }
     }).catch(error => {
-      dispatch(set_isModalOpen(true)) 
+      dispatch(set_isErrorModalOpen(true)) 
       dispatch(set_isAuth(false))
       throw Error(error)
     })
@@ -91,7 +91,7 @@ export const SignInForm = () => {
         </Button>
       </form>
       {isModalOpen && (
-        <Modal
+        <ErrorModal
           errorMessage={'erro'}
         />
       )}
